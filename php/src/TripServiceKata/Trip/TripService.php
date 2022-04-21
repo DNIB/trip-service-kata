@@ -10,7 +10,8 @@ class TripService
 {
     public function getTripsByUser(
         User $user,
-        UserSession $userSession
+        UserSession $userSession,
+        TripRepository $tripRepository
     ) {
         $tripList = array();
         $loggedUser = $userSession->getLoggedUser();
@@ -23,7 +24,7 @@ class TripService
                 }
             }
             if ($isFriend) {
-                $tripList = TripDAO::findTripsByUser($user);
+                $tripList = $tripRepository->findTripsByUser($user);
             }
             return $tripList;
         } else {
