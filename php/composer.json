@@ -22,5 +22,8 @@
         "psr-0": {
             "": ["src/"]
         }
+    },
+    "require": {
+        "mockery/mockery": "^1.0"
     }
 }

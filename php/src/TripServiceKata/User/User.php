@@ -13,8 +13,8 @@ class User
     public function __construct($name)
     {
         $this->name = $name;
-        $this->trips = array();
-        $this->friends = array();
+        $this->trips = [];
+        $this->friends = [];
     }
 
     public function getTrips()
