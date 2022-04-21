@@ -12,23 +12,19 @@ class TripService
         User $user,
         UserSession $userSession,
         TripRepository $tripRepository
-    ) {
-        $tripList = array();
-        $loggedUser = $userSession->getLoggedUser();
-        $isFriend = false;
-        if ($loggedUser != null) {
-            foreach ($user->getFriends() as $friend) {
-                if ($friend == $loggedUser) {
-                    $isFriend = true;
-                    break;
-                }
-            }
-            if ($isFriend) {
-                $tripList = $tripRepository->findTripsByUser($user);
-            }
-            return $tripList;
-        } else {
+    ): array {
+        return in_array($this->getLoggedUserFromSession($userSession), $user->getFriends())
+            ? $tripRepository->findTripsByUser($user)
+            : [];
+    }
+
+    private function getLoggedUserFromSession(UserSession $userSession): User
+    {
+        $user = $userSession->getLoggedUser();
+        if ($user === null) {
             throw new UserNotLoggedInException();
         }
+
+        return $user;
     }
 }
